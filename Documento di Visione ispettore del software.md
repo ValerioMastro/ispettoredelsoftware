@@ -67,7 +67,7 @@ Finestra dedicata alla configurazione:
   
 
 - Parte alta: combo box "Profilo di analisi" (es. "Default", "Microservizio", "Legacy monolitico") con pulsanti "Nuovo", "Duplica", "Elimina" per gestire i profili.  
-- Parte centrale: elenco delle regole, una per riga, con checkbox per attivare/disattivare la regola (es. "God Class", "Long Parameter List", "Vendor Lock-in") e uno o più slider o campi di testo per le soglie principali (es. "Metodi > X", "Attributi > Y", "ProfonditÃ  ereditarietÃ  > D").  
+- Parte centrale: elenco delle regole, una per riga, con checkbox per attivare/disattivare la regola (es. "God Class", "Long Parameter List", "Vendor Lock-in") e uno o più slider o campi di testo per le soglie principali (es. "Metodi > X", "Attributi > Y", "Profondità  ereditarietà  > D").  
 - Parte bassa: pulsanti "Ripristina valori di default" (legge i valori dal file di properties), "Annulla" e "Salva profilo".  
 - Area descrizione sulla destra: mostra per la regola selezionata una spiegazione breve dell'Anti-Pattern e l'effetto delle soglie sul riconoscimento.  
   
@@ -91,10 +91,10 @@ Il tool si inserisce principalmente nei processi di sviluppo e quality assurance
   
 
 - **Revisione del codice e gestione del debito tecnico**, fornendo una fotografia strutturale del progetto prima di attività  di refactoring programmate.  
-- **Integrazione in iterazioni AUP o XP-like**, con esecuzioni periodiche dell'analisi al termine di ogni iterazione per monitorare l'evoluzione della qualitÃ  architetturale nel tempo.  
+- **Integrazione in iterazioni AUP o XP-like**, con esecuzioni periodiche dell'analisi al termine di ogni iterazione per monitorare l'evoluzione della qualità  architetturale nel tempo.  
   
 
-L'introduzione dell'Auditor Automatico modifica i processi interni dei team di sviluppo, rendendo sistematiche le attivitÃ  di valutazione del design e di pianificazione tecnica basata su metriche quantitative e Anti-Pattern rilevati. In contesto didattico, il tool entra anche nel processo di apprendimento degli studenti, che possono osservare direttamente come scelte progettuali si riflettano nelle violazioni rilevate dall'analisi.  
+L'introduzione dell'Auditor Automatico modifica i processi interni dei team di sviluppo, rendendo sistematiche le attività di valutazione del design e di pianificazione tecnica basata su metriche quantitative e Anti-Pattern rilevati. In contesto didattico, il tool entra anche nel processo di apprendimento degli studenti, che possono osservare direttamente come scelte progettuali si riflettano nelle violazioni rilevate dall'analisi.  
   
 
 ## Posizionamento e alternative  
@@ -113,14 +113,14 @@ Alternative oggi disponibili sono tool esterni completi ma complessi da installa
   
 
 - **Sviluppatori e team leader** che vogliono monitorare la qualità  del proprio codice e individuare classi ad alto rischio prima che i problemi esplodano in produzione.  
-- **Architetti software e responsabili di qualitÃ ** che necessitano di indicatori sintetici e di elenchi di classi critiche su cui concentrare le attivitÃ  di refactoring.  
+- **Architetti software e responsabili di qualità ** che necessitano di indicatori sintetici e di elenchi di classi critiche su cui concentrare le attività  di refactoring.  
   
 
 **Parti interessate secondarie:**  
   
 
 - **Docenti e studenti** di corsi di ingegneria del software e tecniche avanzate di programmazione che utilizzano il tool come supporto didattico per riconoscere Anti-Pattern e ragionare sui trade-off architetturali.  
-- **Responsabili di progetto o committenti interni** interessati ad avere un indice di "salute" del software per valutare rischi e prioritÃ  di intervento.  
+- **Responsabili di progetto o committenti interni** interessati ad avere un indice di "salute" del software per valutare rischi e priorità  di intervento.  
   
 
 ## Architettura e tecnologia (indicazioni preliminari)  
@@ -138,7 +138,7 @@ La piattaforma di riferimento è Java SE, sfruttando le API di riflessione per l
 Il sistema è pensato inizialmente come applicazione desktop standalone, distribuita come archivio eseguibile (`.jar`) contenente tutti i moduli e un file di configurazione con i profili di analisi standard. Potrà  essere utilizzato localmente dagli sviluppatori senza necessità  di infrastrutture server dedicate.  
   
 
-In contesto accademico si potrà  adottare una licenza che favorisca la condivisione del codice sorgente tra studenti e la possibilitÃ  di estendere il set di regole, nel rispetto delle linee guida dell'Ateneo. In fasi successive si potrà  valutare un'integrazione con pipeline di build o strumenti di continuous integration, ma ciò non è vincolante per la fase di ideazione.  
+In contesto accademico si potrà  adottare una licenza che favorisca la condivisione del codice sorgente tra studenti e la possibilità di estendere il set di regole, nel rispetto delle linee guida dell'Ateneo. In fasi successive si potrà  valutare un'integrazione con pipeline di build o strumenti di continuous integration, ma ciò non è vincolante per la fase di ideazione.  
   
 
 ## Riassunto delle funzionalità   
@@ -148,7 +148,7 @@ Funzionalità  principali previste:
   
 
 - Caricamento di un progetto target (file `.jar` o cartella di `.class`) e scoperta automatica delle classi da analizzare.  
-- Calcolo di metriche strutturali sulle classi tramite riflessione: metodi pubblici, attributi, ereditarietÃ , dipendenze, firme dei metodi.  
+- Calcolo di metriche strutturali sulle classi tramite riflessione: metodi pubblici, attributi, ereditarietà , dipendenze, firme dei metodi.  
 - Applicazione di un insieme configurabile di regole di controllo per la rilevazione di Anti-Pattern.  
 - Gestione di profili di analisi con soglie e regole attive, configurabili via file di properties e GUI.  
 - Produzione di un report strutturato con elenco delle classi problematiche, dettaglio delle violazioni e punteggio di salute complessivo.  
@@ -176,7 +176,7 @@ Di seguito si riportano alcuni casi d'uso di alto livello che sintetizzano il co
 1. L'utente avvia l'applicazione e apre l'Audit Dashboard.  
 2. L'utente seleziona il target (file `.jar` o directory) tramite il selettore.  
 3. Il sistema carica le classi, calcola le metriche strutturali tramite riflessione e applica le regole attive.  
-4. Il sistema mostra la lista delle classi analizzate con indicatori di gravitÃ  e rende disponibile il report strutturato.  
+4. Il sistema mostra la lista delle classi analizzate con indicatori di gravità  e rende disponibile il report strutturato.  
   
 
 ### CU2 - Configura profilo di analisi  
@@ -211,11 +211,11 @@ Di seguito si riportano alcuni casi d'uso di alto livello che sintetizzano il co
 
 1. L'utente ha eseguito un'analisi (CU1) e sta visualizzando la lista delle classi.  
 2. L'utente seleziona una classe marcata come problematica.  
-3. Il sistema mostra le metriche calcolate (numero di metodi, attributi, profonditÃ  gerarchia, numero di parametri) e l'elenco delle regole violate con le soglie superate.  
+3. Il sistema mostra le metriche calcolate (numero di metodi, attributi, profondità  gerarchia, numero di parametri) e l'elenco delle regole violate con le soglie superate.  
 4. L'utente utilizza queste informazioni per valutare la necessità  di interventi di refactoring.  
   
 
-### CU4 - Esporta report di qualitÃ   
+### CU4 - Esporta report di qualità   
   
 
 **Attori principali:** Sviluppatore, Project Manager.  
@@ -241,7 +241,7 @@ Dal punto di vista dell'**usabilità **, l'interfaccia deve essere semplice e au
 In termini di **affidabilità **, il tool deve gestire in modo robusto errori di caricamento delle classi (classi mancanti, dipendenze non trovate), producendo messaggi d'errore comprensibili senza interrompere bruscamente l'analisi. Ãˆ inoltre desiderabile che il sistema mantenga consistenti i risultati anche in presenza di progetti parziali o incompleti.  
   
 
-Per quanto riguarda le **prestazioni**, l'analisi di un progetto di dimensioni medie deve completarsi in tempi ragionevoli su una postazione di sviluppo standard, in modo da poter essere eseguita frequentemente durante il ciclo di sviluppo. Non Ã¨ richiesto il supporto a progetti di dimensioni enterprise, ma l'architettura dovrÃ  evitare elaborazioni inutilmente ridondanti.  
+Per quanto riguarda le **prestazioni**, l'analisi di un progetto di dimensioni medie deve completarsi in tempi ragionevoli su una postazione di sviluppo standard, in modo da poter essere eseguita frequentemente durante il ciclo di sviluppo. Non è richiesto il supporto a progetti di dimensioni enterprise, ma l'architettura dovrà evitare elaborazioni inutilmente ridondanti.  
   
 
 Quanto alla **supportabilità **, la configurazione tramite file di properties e la struttura modulare delle regole devono facilitare l'aggiunta di nuovi Anti-Pattern e la modifica delle soglie senza interventi invasivi sul resto del sistema. La scelta di tecnologie standard (Java SE, GUI tradizionale) contribuisce a rendere il tool facilmente installabile e utilizzabile in ambienti diversi.  
@@ -316,7 +316,7 @@ Schermata a tre zone con layout fisso:
 Finestra dedicata alla configurazione:
 
 -   Parte alta: combo box “Profilo di analisi” (es. “Default”, “Microservizio”, “Legacy monolitico”) con pulsanti “Nuovo”, “Duplica”, “Elimina” per gestire i profili.
--   Parte centrale: elenco delle regole, una per riga, con checkbox per attivare/disattivare la regola (es. “God Class”, “Long Parameter List”, “Vendor Lock-in”) e uno o più slider o campi di testo per le soglie principali (es. “Metodi > X”, “Attributi > Y”, “ProfonditÃ ereditarietÃ > D”).
+-   Parte centrale: elenco delle regole, una per riga, con checkbox per attivare/disattivare la regola (es. “God Class”, “Long Parameter List”, “Vendor Lock-in”) e uno o più slider o campi di testo per le soglie principali (es. “Metodi > X”, “Attributi > Y”, “Profondità ereditarietà > D”).
 -   Parte bassa: pulsanti “Ripristina valori di default” (legge i valori dal file di properties), “Annulla” e “Salva profilo”.
 -   Area descrizione sulla destra: mostra per la regola selezionata una spiegazione breve dell’Anti-Pattern e l’effetto delle soglie sul riconoscimento.
 
@@ -334,9 +334,9 @@ Finestra per approfondire una singola classe:
 Il tool si inserisce principalmente nei processi di sviluppo e quality assurance, in particolare:
 
 -   **Revisione del codice e gestione del debito tecnico**, fornendo una fotografia strutturale del progetto prima di attività di refactoring programmate.
--   **Integrazione in iterazioni AUP o XP-like**, con esecuzioni periodiche dell’analisi al termine di ogni iterazione per monitorare l’evoluzione della qualitÃ architetturale nel tempo.
+-   **Integrazione in iterazioni AUP o XP-like**, con esecuzioni periodiche dell’analisi al termine di ogni iterazione per monitorare l’evoluzione della qualità architetturale nel tempo.
 
-L’introduzione dell’Auditor Automatico modifica i processi interni dei team di sviluppo, rendendo sistematiche le attivitÃ di valutazione del design e di pianificazione tecnica basata su metriche quantitative e Anti-Pattern rilevati. In contesto didattico, il tool entra anche nel processo di apprendimento degli studenti, che possono osservare direttamente come scelte progettuali si riflettano nelle violazioni rilevate dall’analisi.
+L’introduzione dell’Auditor Automatico modifica i processi interni dei team di sviluppo, rendendo sistematiche le attività di valutazione del design e di pianificazione tecnica basata su metriche quantitative e Anti-Pattern rilevati. In contesto didattico, il tool entra anche nel processo di apprendimento degli studenti, che possono osservare direttamente come scelte progettuali si riflettano nelle violazioni rilevate dall’analisi.
 
 ## Posizionamento e alternative
 
@@ -349,12 +349,12 @@ Alternative oggi disponibili sono tool esterni completi ma complessi da installa
 **Parti interessate principali:**
 
 -   **Sviluppatori e team leader**  che vogliono monitorare la qualità del proprio codice e individuare classi ad alto rischio prima che i problemi esplodano in produzione.
--   **Architetti software e responsabili di qualitÃ ** che necessitano di indicatori sintetici e di elenchi di classi critiche su cui concentrare le attivitÃ di refactoring.
+-   **Architetti software e responsabili di qualità ** che necessitano di indicatori sintetici e di elenchi di classi critiche su cui concentrare le attività di refactoring.
 
 **Parti interessate secondarie:**
 
 -   **Docenti e studenti**  di corsi di ingegneria del software e tecniche avanzate di programmazione che utilizzano il tool come supporto didattico per riconoscere Anti-Pattern e ragionare sui trade-off architetturali.
--   **Responsabili di progetto o committenti interni**  interessati ad avere un indice di “salute” del software per valutare rischi e prioritÃ di intervento.
+-   **Responsabili di progetto o committenti interni**  interessati ad avere un indice di “salute” del software per valutare rischi e priorità di intervento.
 
 ## Architettura e tecnologia (indicazioni preliminari)
 
@@ -366,14 +366,14 @@ La piattaforma di riferimento è Java SE, sfruttando le API di riflessione per l
 
 Il sistema è pensato inizialmente come applicazione desktop standalone, distribuita come archivio eseguibile (`.jar`) contenente tutti i moduli e un file di configurazione con i profili di analisi standard. Potrà essere utilizzato localmente dagli sviluppatori senza necessità di infrastrutture server dedicate.
 
-In contesto accademico si potrà adottare una licenza che favorisca la condivisione del codice sorgente tra studenti e la possibilitÃ di estendere il set di regole, nel rispetto delle linee guida dell’Ateneo. In fasi successive si potrà valutare un’integrazione con pipeline di build o strumenti di continuous integration, ma ciò non è vincolante per la fase di ideazione.
+In contesto accademico si potrà adottare una licenza che favorisca la condivisione del codice sorgente tra studenti e la possibilità di estendere il set di regole, nel rispetto delle linee guida dell’Ateneo. In fasi successive si potrà valutare un’integrazione con pipeline di build o strumenti di continuous integration, ma ciò non è vincolante per la fase di ideazione.
 
 ## Riassunto delle funzionalità
 
 Funzionalità principali previste:
 
 -   Caricamento di un progetto target (file  `.jar`  o cartella di  `.class`) e scoperta automatica delle classi da analizzare.
--   Calcolo di metriche strutturali sulle classi tramite riflessione: metodi pubblici, attributi, ereditarietÃ , dipendenze, firme dei metodi.
+-   Calcolo di metriche strutturali sulle classi tramite riflessione: metodi pubblici, attributi, ereditarietà , dipendenze, firme dei metodi.
 -   Applicazione di un insieme configurabile di regole di controllo per la rilevazione di Anti-Pattern.
 -   Gestione di profili di analisi con soglie e regole attive, configurabili via file di properties e GUI.
 -   Produzione di un report strutturato con elenco delle classi problematiche, dettaglio delle violazioni e punteggio di salute complessivo.
@@ -394,7 +394,7 @@ Di seguito si riportano alcuni casi d’uso di alto livello che sintetizzano il 
 1.  L’utente avvia l’applicazione e apre l’Audit Dashboard.
 2.  L’utente seleziona il target (file  `.jar`  o directory) tramite il selettore.
 3.  Il sistema carica le classi, calcola le metriche strutturali tramite riflessione e applica le regole attive.
-4.  Il sistema mostra la lista delle classi analizzate con indicatori di gravitÃ e rende disponibile il report strutturato.
+4.  Il sistema mostra la lista delle classi analizzate con indicatori di gravità e rende disponibile il report strutturato.
 
 ### CU2 - Configura profilo di analisi
 
@@ -419,7 +419,7 @@ Di seguito si riportano alcuni casi d’uso di alto livello che sintetizzano il 
 
 1.  L’utente ha eseguito un’analisi (CU1) e sta visualizzando la lista delle classi.
 2.  L’utente seleziona una classe marcata come problematica.
-3.  Il sistema mostra le metriche calcolate (numero di metodi, attributi, profonditÃ gerarchia, numero di parametri) e l’elenco delle regole violate con le soglie superate.
+3.  Il sistema mostra le metriche calcolate (numero di metodi, attributi, profondità gerarchia, numero di parametri) e l’elenco delle regole violate con le soglie superate.
 4.  L’utente utilizza queste informazioni per valutare la necessità di interventi di refactoring.
 
 ### CU4 - Esporta report di qualitÃ
@@ -438,9 +438,9 @@ Di seguito si riportano alcuni casi d’uso di alto livello che sintetizzano il 
 
 Dal punto di vista dell’**usabilità **, l’interfaccia deve essere semplice e auto-esplicativa, con pochi schermi principali, etichette chiare e valori di default ragionevoli per i profili di analisi. L’utente non deve essere costretto a conoscere nel dettaglio tutte le regole per eseguire una prima analisi del progetto.
 
-In termini di **affidabilità **, il tool deve gestire in modo robusto errori di caricamento delle classi (classi mancanti, dipendenze non trovate), producendo messaggi d’errore comprensibili senza interrompere bruscamente l’analisi. Ãˆ inoltre desiderabile che il sistema mantenga consistenti i risultati anche in presenza di progetti parziali o incompleti.
+In termini di **affidabilità **, il tool deve gestire in modo robusto errori di caricamento delle classi (classi mancanti, dipendenze non trovate), producendo messaggi d’errore comprensibili senza interrompere bruscamente l’analisi. è inoltre desiderabile che il sistema mantenga consistenti i risultati anche in presenza di progetti parziali o incompleti.
 
-Per quanto riguarda le  **prestazioni**, l’analisi di un progetto di dimensioni medie deve completarsi in tempi ragionevoli su una postazione di sviluppo standard, in modo da poter essere eseguita frequentemente durante il ciclo di sviluppo. Non Ã¨ richiesto il supporto a progetti di dimensioni enterprise, ma l’architettura dovrÃ evitare elaborazioni inutilmente ridondanti.
+Per quanto riguarda le  **prestazioni**, l’analisi di un progetto di dimensioni medie deve completarsi in tempi ragionevoli su una postazione di sviluppo standard, in modo da poter essere eseguita frequentemente durante il ciclo di sviluppo. Non à richiesto il supporto a progetti di dimensioni enterprise, ma l’architettura dovrà evitare elaborazioni inutilmente ridondanti.
 
 Quanto alla **supportabilità **, la configurazione tramite file di properties e la struttura modulare delle regole devono facilitare l’aggiunta di nuovi Anti-Pattern e la modifica delle soglie senza interventi invasivi sul resto del sistema. La scelta di tecnologie standard (Java SE, GUI tradizionale) contribuisce a rendere il tool facilmente installabile e utilizzabile in ambienti diversi.
 
