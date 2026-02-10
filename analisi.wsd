@@ -1,0 +1,119 @@
+@startuml diagramma uml che rappresenta il motore di analisi dell'Ispettore Architettura Software, con i suoi componenti principali e le loro relazioni.
+title Motore di analisi - Ispettore Architettura Software
+
+' Pacchetti logici
+package "scanner" {
+  class TargetDescriptor {
+    - path : String
+    - type : TargetType
+  }
+
+  class ClassPathScanner {
+    + findClassNames(target : TargetDescriptor) : List<String>
+  }
+
+  enum TargetType {
+    JAR
+    DIRECTORY
+  }
+}
+
+package "metrics" {
+  class MetricCalculator {
+    + computeMetrics(clazz : Class) : ClassMetrics
+  }
+
+  class ClassMetrics {
+    + className : String
+    + totalMethods : int
+    + publicMethods : int
+    + fields : int
+    + depthOfInheritance : int
+    + maxParametersPerMethod : int
+    + outgoingDependencies : int
+    + isInterface : boolean
+    + hasOnlyConstants : boolean
+  }
+}
+
+package "rules" {
+  class AnalysisProfile {
+    + godClassMaxMethods : int
+    + godClassMaxFields : int
+    + longParamListMaxParams : int
+    + enabledRules : Set<String>
+  }
+
+  interface Rule {
+    + getId() : String
+    + getName() : String
+    + apply(metrics : ClassMetrics, profile : AnalysisProfile) : List<Violation>
+  }
+
+  class GodClassRule implements Rule
+  class LongParameterListRule implements Rule
+  class ConstantInterfaceRule implements Rule
+  class BrokenUtilityClassRule implements Rule
+
+  class RuleEngine {
+    - rules : List<Rule>
+    + analyzeClass(metrics : ClassMetrics, profile : AnalysisProfile) : List<Violation>
+  }
+}
+
+package "core" {
+  class ProjectAnalyzer {
+    + analyze(target : TargetDescriptor, profile : AnalysisProfile) : ProjectAnalysisResult
+  }
+
+  class Violation {
+    + className : String
+    + ruleId : String
+    + description : String
+    + severity : Severity
+  }
+
+  class ClassAnalysisResult {
+    + metrics : ClassMetrics
+    + violations : List<Violation>
+    + overallSeverity : Severity
+  }
+
+  class ProjectAnalysisResult {
+    + classResults : List<ClassAnalysisResult>
+    + healthScore : int
+  }
+
+  enum Severity {
+    LOW
+    MEDIUM
+    HIGH
+  }
+}
+
+' Relazioni tra i blocchi
+ProjectAnalyzer --> TargetDescriptor
+ProjectAnalyzer --> AnalysisProfile
+ProjectAnalyzer --> ClassPathScanner
+ProjectAnalyzer --> MetricCalculator
+ProjectAnalyzer --> RuleEngine
+ProjectAnalyzer --> ProjectAnalysisResult
+
+ClassPathScanner --> TargetDescriptor
+MetricCalculator --> ClassMetrics
+
+RuleEngine "1" o-- "*" Rule
+RuleEngine --> ClassMetrics
+RuleEngine --> AnalysisProfile
+RuleEngine --> Violation
+
+ClassAnalysisResult o-- ClassMetrics
+ClassAnalysisResult o-- Violation
+ProjectAnalysisResult "1" o-- "*" ClassAnalysisResult
+
+GodClassRule -up-|> Rule
+LongParameterListRule -up-|> Rule
+ConstantInterfaceRule -up-|> Rule
+BrokenUtilityClassRule -up-|> Rule
+
+@enduml
