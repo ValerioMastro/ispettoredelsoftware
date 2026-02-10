@@ -1,6 +1,7 @@
 # Demo: Motore di analisi (Swing)
 
-Piccolo prototype Java Swing che implementa una versione minima del diagramma `analisi.puml`.
+Piccolo prototype Java Swing che implementa una versione minima del progetto di tecniche di programmazione avanzata sull'analisi dell'antipattern
+
 
 Prerequisiti:
 - JDK 11+
