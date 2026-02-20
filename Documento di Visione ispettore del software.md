@@ -6,7 +6,7 @@ Febbraio 2026
 
 **Introduzione**
 
-Nel corso del tempo i programmi si ricoprono di problemi strutturali: classi che fanno troppo, dipendenze ingarbugliate, ereditarietà mal condotta. Bug non bloccanti, ma che rendono dolorosa la manutenzione. Questo progetto è uno strumento che analizza file .jar o cartelle di .class per scovare questi anti-pattern nel design object-oriented, senza eseguirli.
+Nel corso del tempo i programmi si ricoprono di problemi strutturali: classi che fanno troppo, dipendenze complicate, ereditarietà mal condotta. Bug che non bloccanti, ma che rendono difficoltosa la manutenzione. Questo progetto è uno strumento che analizza file .jar o cartelle di .class per scovare questi anti-pattern nel design object-oriented, senza eseguirli.
 L'analisi delle violazioni ai principi di design, tipiche (pensiamo a God Class o Long Parameter List) avviene automaticamente, sulla struttura statica delle classi. E deve valere in progetti diversi (microservizi, vecchi orbi, librerie) mediante profili configurabili, regolabili con soglie personalizzate.
 
 Le Features Principali:
@@ -66,24 +66,24 @@ Standalone .jar con profili default inclusi, no server.
 
 **Casi d'uso principali**  
 
-- CU1 - Analisi progetto  
+CU1 - Analisi progetto  
 **Attore:** Sviluppatore  
 Scegli jar/cartella, lancia scan, vedi classi critiche + score salute.  
 1. Apri app, seleziona target.  
 2. Sistema carica, analizza metriche/regole.  
 3. Tabella classi + report.  
-- CU2 - Configura profilo  
+CU2 - Configura profilo  
 **Attore:** Sviluppatore  
 Modifica soglie/regole via GUI/file.  
 1. Apri pannello regole.  
 2. Scegli/crea profilo, attiva/disattiva (God Class...), regola slider.  
 3. Salva in .properties.  
-- CU3 - Dettaglio classe  
+CU3 - Dettaglio classe  
 **Attore:** Sviluppatore  
 Da lista, clicca classe problematica per metriche/violazioni.  
 1. Post-analisi (CU1), seleziona riga.  
 2. Vedi numeri + regole violate + suggerimenti refactor.  
-- CU4 - Esporta report  
+CU4 - Esporta report  
 **Attore:** Sviluppatore/PM  
 Salva risultati in testo/HTML.  
 1. Dopo CU1, "Esporta".  
