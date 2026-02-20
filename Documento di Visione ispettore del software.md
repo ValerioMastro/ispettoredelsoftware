@@ -1,22 +1,20 @@
-# Documento di Visione  
-## Ispettore dell'Architettura Software  
-**Corso di Tecniche Avanzate di Programmazione**  
-**Project Work**  
-**Febbraio 2026**  
+**ISPETTORE DEL SOFTWARE**
+Corso di Tecniche Avanzate di Programmazione 
+Project work
+Febbraio 2026
 
-## Introduzione  
+**Introduzione**
+Nel corso del tempo i programmi si ricoprono di problemi strutturali: classi che fanno troppo, dipendenze ingarbugliate, ereditarietà mal condotta. Bug non bloccanti, ma che rendono dolorosa la manutenzione. Questo progetto è uno strumento che analizza file .jar o cartelle di .class per scovare questi anti-pattern nel design object-oriented, senza eseguirli.
 
-Nei progetti software, col tempo il codice si riempie di problemi strutturali: classi che fanno troppe cose, dipendenze complicate, ereditarietà usata male. Non sono bug che bloccano l'app, ma rendono la manutenzione un incubo. Questo progetto crea uno strumento che analizza file .jar o cartelle di .class per trovare questi anti-pattern nel design object-oriented, senza la necessità di  eseguirli.  
+L'analisi delle violazioni ai principi di design, tipiche (pensiamo a God Class o Long Parameter List) avviene automaticamente, sulla struttura statica delle classi. E deve valere in progetti diversi (microservizi, vecchi orbi, librerie) mediante profili configurabili, regolabili con soglie personalizzate.
 
-## Cosa fa lo strumento  
+Le Features Principali:
 
-L'idea è identificare automaticamente violazioni dei principi pattern come  God Class o Long Parameter List, analizzando solo la struttura delle classi. Deve funzionare su progetti diversi (microservizi, vecchi monoliti, librerie) grazie a profili configurabili con soglie personalizzabili.  
-
-Le feature principali:  
-- **Analisi tramite riflessione Java**: conta metodi pubblici, attributi, profondità ereditarietà, tipi variabili, lunghezza firme metodi.  
-- **Rilevazione anti-pattern**: God Class, Switch Mania, Lazy Class, Singleton non corretto, Utility Class mal fatta, Yo-Yo, liste parametri lunghe, Refused Bequest, Constant Interface, Vendor Lock-in.  
-- **Profili di analisi**: file config e GUI per attivare/disattivare regole e cambiare soglie.  
-- **Report chiari**: classi problematiche, violazioni con soglie superate, punteggio salute progetto es (90/100 "Buon codice").  
+1. Ispezione attraverso riflessione Java: conta metodi pubblici, attributi, profondità ereditaria, variabili di tipo, lunghezza delle firme.
+2. Riconoscimento Anti-Pattern: God Class, Switch Mania, Lazy Class, Singleton non benfatto, Utility Class disperatamente utile, Yo-Yo, liste parametri lunghe, Refused Bequest, Constant lnterface, Vendor Lock-in.
+3. Profili di ispezione: file config e appunto GUI per attivare/disattivare norme, cambiare soglie.
+4. Report chiari: elenco delle classi problematiche, delle violazioni con palesato superamento della soglia, del punteggio di salute (es. fra 90 e 100 "Codice pulito").
+L'interfaccia è una Dashboard semplice e direi piacevole: om si ha a che fare con@click di menù.
 
 L'interfaccia è una **Dashboard** semplice: scegli il target, configuri regole (checkbox/slider), vedi risultati con semaforo rosso/giallo/verde.  
 
