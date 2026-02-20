@@ -19,7 +19,7 @@ L'interfaccia è una Dashboard semplice e direi piacevole: om si ha a che fare c
 
 L'interfaccia è una **Dashboard** semplice: scegli il target, configuri regole (checkbox/slider), vedi risultati con semaforo rosso/giallo/verde.  
 
-### Schermi principali (bozza)  
+**Schermi principali (bozza)**
 
 **Dashboard principale**  
 Layout a 3 zone:  
@@ -44,13 +44,16 @@ Layout a 3 zone:
 ## Processi dove si usa  
 Perfetto per revisioni codice e controllo debito tecnico, prima del refactoring. Si integra in iterazioni XP/AUP, lanciandolo a fine sprint per monitorare la qualità architetturale.  
 
-## Alternative  
-Simile a SonarQube ma più leggero, solo per anti-pattern specifici.
-## Chi lo usa  
-- **Sviluppatori**: trovano classi a rischio prima che siano un problema.  
-- **Project manager**: hanno un punteggio salute per priorizzare delle fix.  
+**Alternative**
 
-## Tech stack (indicazioni)  
+Simile a SonarQube ma più leggero, solo per anti-pattern specifici.
+**Chi lo usa**
+
+- Sviluppatori**: trovano classi a rischio prima che siano un problema.  
+- Project manager: hanno un punteggio salute per priorizzare delle fix.  
+
+**Tech stack** 
+
 Architettura modulare: loader classi, metriche, regole, profili, report, GUI. Java con riflessione per introspezione jar/class, Swing per interfaccia, .properties per config. Facile da evolvere aggiungendo regole.  
 Standalone .jar con profili default inclusi, no server.  
 
@@ -61,35 +64,38 @@ Standalone .jar con profili default inclusi, no server.
 - Genera report con classi violanti + score.  
 - Dashboard: target, regole, risultati.  
 
-## Casi d'uso principali  
-### CU1 - Analisi progetto  
+**Casi d'uso principali**  
+
+- CU1 - Analisi progetto  
 **Attore:** Sviluppatore  
 Scegli jar/cartella, lancia scan, vedi classi critiche + score salute.  
 1. Apri app, seleziona target.  
 2. Sistema carica, analizza metriche/regole.  
 3. Tabella classi + report.  
-### CU2 - Configura profilo  
+- CU2 - Configura profilo  
 **Attore:** Sviluppatore  
 Modifica soglie/regole via GUI/file.  
 1. Apri pannello regole.  
 2. Scegli/crea profilo, attiva/disattiva (God Class...), regola slider.  
 3. Salva in .properties.  
-### CU3 - Dettaglio classe  
+- CU3 - Dettaglio classe  
 **Attore:** Sviluppatore  
 Da lista, clicca classe problematica per metriche/violazioni.  
 1. Post-analisi (CU1), seleziona riga.  
 2. Vedi numeri + regole violate + suggerimenti refactor.  
-### CU4 - Esporta report  
+- CU4 - Esporta report  
 **Attore:** Sviluppatore/PM  
 Salva risultati in testo/HTML.  
 1. Dopo CU1, "Esporta".  
 2. File con score + classi violanti.  
-## Requisiti URPS  
+**Requisiti URPS**
+  
 **Usabilità**: interfaccia semplice, default ok per primo uso.  
 **Affidabilità**: gestisce jar rotti senza crash, messaggi chiari.  
 **Prestazioni**: analisi media in pochi minuti su PC normale.  
 **Supportabilità**: aggiungi regole facili, no dipendenze pazze.  
-## Costi e benefici  
+**Costi e benefici**  
+
 Costo: le metriche, il motore regole ed una GUI reattiva. 
 Benefici: meno debito tecnico, refactoring mirati, awareness anti-pattern.  
 Rischi: se le soglie sono sbagliate c'è la possibilità di falsi positivi. Possibile miitigazione aggiungendo profili e facendo altre iterazioni di calibrazione.  
