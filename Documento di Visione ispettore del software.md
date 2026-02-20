@@ -1,11 +1,12 @@
 **ISPETTORE DEL SOFTWARE**
+
 Corso di Tecniche Avanzate di Programmazione 
 Project work
 Febbraio 2026
 
 **Introduzione**
-Nel corso del tempo i programmi si ricoprono di problemi strutturali: classi che fanno troppo, dipendenze ingarbugliate, ereditarietà mal condotta. Bug non bloccanti, ma che rendono dolorosa la manutenzione. Questo progetto è uno strumento che analizza file .jar o cartelle di .class per scovare questi anti-pattern nel design object-oriented, senza eseguirli.
 
+Nel corso del tempo i programmi si ricoprono di problemi strutturali: classi che fanno troppo, dipendenze ingarbugliate, ereditarietà mal condotta. Bug non bloccanti, ma che rendono dolorosa la manutenzione. Questo progetto è uno strumento che analizza file .jar o cartelle di .class per scovare questi anti-pattern nel design object-oriented, senza eseguirli.
 L'analisi delle violazioni ai principi di design, tipiche (pensiamo a God Class o Long Parameter List) avviene automaticamente, sulla struttura statica delle classi. E deve valere in progetti diversi (microservizi, vecchi orbi, librerie) mediante profili configurabili, regolabili con soglie personalizzate.
 
 Le Features Principali:
