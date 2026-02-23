@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 public class MetricCalculator {
     public ClassMetrics computeMetrics(File javaFile) {
@@ -43,6 +46,62 @@ public class MetricCalculator {
         } catch (IOException e) {
             // keep defaults
         }
+        return m;
+    }
+
+    public ClassMetrics computeMetrics(Class<?> clazz) {
+        ClassMetrics m = new ClassMetrics();
+        m.className = clazz.getName();
+
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        Field[] declaredFields = clazz.getDeclaredFields();
+
+        int publicMethods = 0;
+        int maxParams = 0;
+        for (Method method : declaredMethods) {
+            if (Modifier.isPublic(method.getModifiers())) publicMethods++;
+            int count = method.getParameterCount();
+            if (count > maxParams) maxParams = count;
+        }
+
+        boolean isInterface = clazz.isInterface();
+        boolean hasOnlyConstants = false;
+        if (isInterface) {
+            boolean onlyConstants = true;
+            for (Field field : declaredFields) {
+                int mod = field.getModifiers();
+                if (!(Modifier.isStatic(mod) && Modifier.isFinal(mod))) {
+                    onlyConstants = false;
+                    break;
+                }
+            }
+            hasOnlyConstants = onlyConstants;
+        }
+
+        int inheritanceDepth = 0;
+        // Chosen convention: exclude java.lang.Object (a class directly extending Object has depth 0).
+        Class<?> current = clazz.getSuperclass();
+        while (current != null && current != Object.class) {
+            inheritanceDepth++;
+            current = current.getSuperclass();
+        }
+
+        m.declaredMethodsCount = declaredMethods.length;
+        m.declaredFieldsCount = declaredFields.length;
+        m.maxParametersCount = maxParams;
+        m.interfacesCount = clazz.getInterfaces().length;
+        m.inheritanceDepth = inheritanceDepth;
+
+        // Map reflection metrics to legacy fields used by the existing GUI and rules.
+        m.totalMethods = m.declaredMethodsCount;
+        m.publicMethods = publicMethods;
+        m.fields = m.declaredFieldsCount;
+        m.maxParametersPerMethod = m.maxParametersCount;
+        m.isInterface = isInterface;
+        m.hasOnlyConstants = hasOnlyConstants;
+        m.depthOfInheritance = m.inheritanceDepth;
+        m.outgoingDependencies = 0;
+
         return m;
     }
 

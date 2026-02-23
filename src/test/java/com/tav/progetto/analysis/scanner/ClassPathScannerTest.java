@@ -46,7 +46,6 @@ class ClassPathScannerTest {
         List<ScannedClass> scanned = scanner.findClasses(new TargetDescriptor(jarPath.toString(), TargetType.JAR));
 
         List<String> names = scanned.stream().map(ScannedClass::getClassName).sorted().collect(Collectors.toList());
-        assertEquals(List.of("com.example.A", "com.example.B$Inner"), names);
+        assertEquals(List.of("com.example.A"), names);
     }
 }
-

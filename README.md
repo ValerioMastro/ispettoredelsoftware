@@ -15,5 +15,5 @@ mvn compile exec:java
 ```
 
 Uso:
-- Scegli una directory di sorgenti Java; premi `Run Analysis`.
+- Scegli una directory di .class oppure un file .jar, premi `Run Analysis`.
 - Cambia le soglie nella UI per adattare le regole.
