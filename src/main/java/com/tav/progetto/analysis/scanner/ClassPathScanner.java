@@ -4,27 +4,74 @@ import com.tav.progetto.analysis.core.TargetDescriptor;
 import com.tav.progetto.analysis.core.TargetType;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.stream.Stream;
 
 public class ClassPathScanner {
-    public List<File> findClassFiles(TargetDescriptor target) {
-        List<File> result = new ArrayList<>();
+    public List<ScannedClass> findClasses(TargetDescriptor target) {
+        List<ScannedClass> result = new ArrayList<>();
         if (target.getType() == TargetType.DIRECTORY) {
-            File root = new File(target.getPath());
-            scanDir(root, result);
+            scanDirectory(target, result);
+        } else if (target.getType() == TargetType.JAR) {
+            scanJar(target, result);
         }
         return result;
     }
 
-    private void scanDir(File dir, List<File> out) {
-        if (dir == null || !dir.exists()) return;
-        if (dir.isFile() && dir.getName().endsWith(".java")) {
-            out.add(dir);
-            return;
+    private void scanDirectory(TargetDescriptor target, List<ScannedClass> out) {
+        Path root = Path.of(target.getPath());
+        if (!Files.exists(root)) return;
+        try (Stream<Path> paths = Files.walk(root)) {
+            paths
+                    .filter(Files::isRegularFile)
+                    .filter(p -> p.getFileName().toString().endsWith(".class"))
+                    .filter(p -> !p.getFileName().toString().equals("module-info.class"))
+                    .forEach(p -> {
+                        String fqcn = toFqcnFromRelativePath(root.relativize(p));
+                        if (fqcn == null) return;
+                        out.add(new ScannedClass(fqcn, p.toString(), target.getType()));
+                    });
+        } catch (IOException e) {
+            // ignore for demo/prototype
         }
-        File[] children = dir.listFiles();
-        if (children == null) return;
-        for (File f : children) scanDir(f, out);
+    }
+
+    private void scanJar(TargetDescriptor target, List<ScannedClass> out) {
+        File jarPath = new File(target.getPath());
+        if (!jarPath.exists() || !jarPath.isFile()) return;
+        try (JarFile jarFile = new JarFile(jarPath)) {
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry entry = entries.nextElement();
+                if (entry.isDirectory()) continue;
+                String name = entry.getName();
+                if (name == null) continue;
+                if (name.startsWith("META-INF/")) continue;
+                if (!name.endsWith(".class")) continue;
+                if (name.endsWith("module-info.class")) continue;
+
+                String fqcn = name.substring(0, name.length() - ".class".length()).replace('/', '.');
+                if (fqcn.isEmpty()) continue;
+                out.add(new ScannedClass(fqcn, jarPath.getPath() + "!/" + name, target.getType()));
+            }
+        } catch (IOException e) {
+            // ignore for demo/prototype
+        }
+    }
+
+    private String toFqcnFromRelativePath(Path relativeClassPath) {
+        if (relativeClassPath == null) return null;
+        String rel = relativeClassPath.toString();
+        if (!rel.endsWith(".class")) return null;
+        String noExt = rel.substring(0, rel.length() - ".class".length());
+        if (noExt.isEmpty()) return null;
+        return noExt.replace(File.separatorChar, '.').replace('/', '.');
     }
 }

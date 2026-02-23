@@ -2,6 +2,7 @@ package com.tav.progetto.analysis.ui;
 
 import com.tav.progetto.analysis.core.ProjectAnalyzer;
 import com.tav.progetto.analysis.core.TargetDescriptor;
+import com.tav.progetto.analysis.core.TargetType;
 import com.tav.progetto.analysis.core.ProjectAnalysisResult;
 import com.tav.progetto.analysis.rules.AnalysisProfile;
 
@@ -52,7 +53,7 @@ public class MainFrame extends JFrame {
 
     private void onBrowse(ActionEvent e) {
         JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         int res = fc.showOpenDialog(this);
         if (res == JFileChooser.APPROVE_OPTION) {
             File f = fc.getSelectedFile();
@@ -62,14 +63,27 @@ public class MainFrame extends JFrame {
 
     private void onRun(ActionEvent e) {
         String path = pathField.getText().trim();
-        if (path.isEmpty()) { JOptionPane.showMessageDialog(this, "sample-project"); return; }
+        if (path.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleziona una directory di .class o un file .jar");
+            return;
+        }
+        File selected = new File(path);
+        TargetType targetType;
+        if (selected.isDirectory()) {
+            targetType = TargetType.DIRECTORY;
+        } else if (selected.isFile() && selected.getName().toLowerCase().endsWith(".jar")) {
+            targetType = TargetType.JAR;
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleziona una directory di .class o un file .jar");
+            return;
+        }
         AnalysisProfile profile = new AnalysisProfile();
         try { profile.godClassMaxMethods = Integer.parseInt(godMethodsField.getText()); } catch (Exception ex) {}
         try { profile.godClassMaxFields = Integer.parseInt(godFieldsField.getText()); } catch (Exception ex) {}
         try { profile.longParamListMaxParams = Integer.parseInt(longParamsField.getText()); } catch (Exception ex) {}
 
         ProjectAnalyzer pa = new ProjectAnalyzer();
-        ProjectAnalysisResult res = pa.analyze(new TargetDescriptor(path, com.tav.progetto.analysis.core.TargetType.DIRECTORY), profile);
+        ProjectAnalysisResult res = pa.analyze(new TargetDescriptor(path, targetType), profile);
 
         tableModel.setRowCount(0);
         for (var cr : res.classResults) {
