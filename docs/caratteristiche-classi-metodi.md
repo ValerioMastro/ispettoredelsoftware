@@ -98,7 +98,4 @@ Le regole sono incapsulate dall'interfaccia:
 - `sample-project`
   - `GodClass.java`: progettata per superare la soglia metodi/campi e generare `GOD_CLASS`.
   - `LongParamClass.java`: progettata per superare la soglia parametri e generare `LONG_PARAM_LIST`.
-  - `UtilityClass.java` e `ConstantInterface.java`: incluse come casi "puliti" nel prototipo attuale.
-
-## Nota di allineamento con UML
-Nei diagrammi PlantUML compaiono anche regole come `ConstantInterfaceRule` e `BrokenUtilityClassRule`, ma nel codice attuale non risultano implementate/attivate: la demo esegue solo `GOD_CLASS` e `LONG_PARAM_LIST`.
+  - `UtilityClass.java` e `ConstantInterface.java`: inclus
