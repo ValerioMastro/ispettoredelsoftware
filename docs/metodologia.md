@@ -40,8 +40,3 @@ Le soglie sono centralizzate in `AnalysisProfile` e possono essere modificate da
 - Test: `mvn test`
 - Target consigliato per la demo: cartella `sample-project`
 
-## Limiti noti (da citare in slide)
-- L'analisi e' basata su parsing testuale: non copre bene firme multi-linea, annotazioni, casi complessi di Java, ecc.
-- `depthOfInheritance` e' attualmente un placeholder (0) nel prototipo.
-- `TargetType.JAR` e' definito nel modello, ma lo scanner del prototipo gestisce solo `TargetType.DIRECTORY`.
-- Nel codice attuale sono operative solo 2 regole (God Class, Long Parameter List).
