@@ -2,7 +2,7 @@
 
 ## Obiettivo
 Realizzare un prototipo minimale (demo) di un "motore di analisi" capace di:
-- scansionare un target di sorgenti Java (directory),
+- scansionare un target di artefatti Java compilati (`.class`, directory di `.class`, `.jar`),
 - estrarre metriche semplici su classi/metodi,
 - applicare regole (antipattern/code smell) basate su soglie configurabili,
 - produrre un report sintetico (tabella + health score) tramite UI Java Swing.
@@ -21,7 +21,7 @@ Realizzare un prototipo minimale (demo) di un "motore di analisi" capace di:
 - Documentazione tecnica tramite UML (diagrammi PlantUML) per fissare componenti e relazioni.
 
 ## Pipeline di analisi (end-to-end)
-1. L'utente seleziona una directory target dalla UI e imposta le soglie.
+1. L'utente seleziona dalla UI una directory di `.class`, un file `.class` oppure un `.jar` e imposta le soglie.
 2. Lo `scanner` raccoglie ricorsivamente tutti i file `.java` nella directory.
 3. Il `MetricCalculator` legge ogni file e calcola le metriche disponibili (conteggi e flag).
 4. Il `RuleEngine` applica le regole abilitate nel profilo e genera violazioni con severita'.
@@ -33,7 +33,14 @@ Le soglie sono centralizzate in `AnalysisProfile` e possono essere modificate da
 - `godClassMaxMethods` (default 20)
 - `godClassMaxFields` (default 15)
 - `longParamListMaxParams` (default 4)
-- `enabledRules` (regole abilitate di default: `GOD_CLASS`, `LONG_PARAM_LIST`)
+- `lazyClassMaxMethods` (default 2)
+- `lazyClassMaxFields` (default 1)
+- `utilityMinStaticMethodRatio` (default 0.80)
+- `utilityMaxInstanceFields` (default 1)
+- `yoyoMaxInheritanceDepth` (default 3)
+- `constantInterfaceMinConstantFields` (default 2)
+- `constantInterfaceMaxMethods` (default 1)
+- `enabledRules` (regole abilitate di default: `GOD_CLASS`, `LONG_PARAM_LIST`, `LAZY_CLASS`, `UTILITY_CLASS`, `YOYO`, `CONSTANT_INTERFACE`, `BROKEN_UTILITY_CLASS`)
 
 ## Modalita' di esecuzione e verifica
 - Esecuzione demo: `mvn compile exec:java`
@@ -42,6 +49,8 @@ Le soglie sono centralizzate in `AnalysisProfile` e possono essere modificate da
 
 ## Limiti noti (da citare in slide)
 - L'analisi e' basata su parsing testuale: non copre bene firme multi-linea, annotazioni, casi complessi di Java, ecc.
-- `depthOfInheritance` e' attualmente un placeholder (0) nel prototipo.
-- `TargetType.JAR` e' definito nel modello, ma lo scanner del prototipo gestisce solo `TargetType.DIRECTORY`.
-- Nel codice attuale sono operative solo 2 regole (God Class, Long Parameter List).
+- Il path file-based di `MetricCalculator` resta approssimato; il path reflection-based e' quello usato per le metriche piu' affidabili.
+- `TargetType.JAR` e `TargetType.CLASS_FILE` sono supportati nel flusso corrente, ma la qualita' dell'analisi dipende dal caricamento corretto delle classi.
+- `BrokenUtilityClassRule` usa un'euristica minima basata su reflection: rileva classi con soli membri statici ma costruttori non privati, senza inferire l'intento semantico completo.
+- `ConstantInterfaceRule` e `UtilityClassRule` restano euristiche strutturali: rilevano classi o interfacce "constant-heavy" o "utility-like" senza semantica applicativa profonda.
+- Nel codice attuale sono operative 7 regole (God Class, Long Parameter List, Lazy Class, Utility Class, Yo-yo Inheritance, Constant Interface, Broken Utility Class).

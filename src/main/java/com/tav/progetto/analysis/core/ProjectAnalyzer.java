@@ -1,5 +1,6 @@
 package com.tav.progetto.analysis.core;
 
+import com.tav.progetto.analysis.classfile.ClassFileInspector;
 import com.tav.progetto.analysis.loader.ClassLoadingService;
 import com.tav.progetto.analysis.metrics.ClassMetrics;
 import com.tav.progetto.analysis.metrics.MetricCalculator;
@@ -47,6 +48,7 @@ public class ProjectAnalyzer {
                 try {
                     Class<?> clazz = loadingService.loadClass(scanned.getClassName(), loader);
                     m = calculator.computeMetrics(clazz);
+                    enrichWithBytecodeMetrics(m, scanned);
                 } catch (Throwable e) {
                     m = new ClassMetrics();
                     m.className = scanned.getClassName();
@@ -95,5 +97,16 @@ public class ProjectAnalyzer {
             else updatedPenalty += 2;
         }
         return updatedPenalty;
+    }
+
+    private void enrichWithBytecodeMetrics(ClassMetrics metrics, ScannedClass scanned) {
+        try {
+            calculator.applySwitchUsage(
+                    metrics,
+                    ClassFileInspector.inspectSwitchUsage(scanned.getOriginPath(), scanned.getTargetType())
+            );
+        } catch (IOException ignored) {
+            // Keep reflection metrics even when bytecode-only enrichment is unavailable.
+        }
     }
 }

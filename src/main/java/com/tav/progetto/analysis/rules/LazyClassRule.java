@@ -7,12 +7,12 @@ import com.tav.progetto.analysis.metrics.ClassMetrics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GodClassRule implements Rule {
+public class LazyClassRule implements Rule {
     @Override
-    public String getId() { return "GOD_CLASS"; }
+    public String getId() { return "LAZY_CLASS"; }
 
     @Override
-    public String getName() { return "God Class"; }
+    public String getName() { return "Lazy Class"; }
 
     @Override
     public List<Violation> apply(ClassMetrics metrics, AnalysisProfile profile) {
@@ -21,12 +21,14 @@ public class GodClassRule implements Rule {
 
         int methods = metrics.getEffectiveMethodsCount();
         int fields = metrics.getEffectiveFieldsCount();
-        if (methods > profile.godClassMaxMethods || fields > profile.godClassMaxFields) {
+        if (!metrics.isInterface
+                && methods <= profile.lazyClassMaxMethods
+                && fields <= profile.lazyClassMaxFields) {
             res.add(newViolation(
                     metrics,
-                    Severity.HIGH,
-                    "God class: methods " + methods + " > " + profile.godClassMaxMethods
-                            + " or fields " + fields + " > " + profile.godClassMaxFields
+                    Severity.LOW,
+                    "Lazy class: methods " + methods + " <= " + profile.lazyClassMaxMethods
+                            + " and fields " + fields + " <= " + profile.lazyClassMaxFields
             ));
         }
         return res;

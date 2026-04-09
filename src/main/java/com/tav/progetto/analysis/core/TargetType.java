@@ -2,5 +2,6 @@ package com.tav.progetto.analysis.core;
 
 public enum TargetType {
     DIRECTORY,
-    JAR
+    JAR,
+    CLASS_FILE
 }

@@ -1,5 +1,6 @@
 package com.tav.progetto.analysis.scanner;
 
+import com.tav.progetto.analysis.classfile.ClassFileInspector;
 import com.tav.progetto.analysis.core.TargetDescriptor;
 import com.tav.progetto.analysis.core.TargetType;
 
@@ -26,6 +27,8 @@ public class ClassPathScanner {
             scanDirectory(target, result);
         } else if (target.getType() == TargetType.JAR) {
             scanJar(target, result);
+        } else if (target.getType() == TargetType.CLASS_FILE) {
+            scanClassFile(target, result);
         }
         return result;
     }
@@ -71,6 +74,23 @@ public class ClassPathScanner {
                 out.add(new ScannedClass(fqcn, jarPath.getPath() + "!/" + name, target.getType()));
             }
         } catch (IOException e) {
+            // ignore for demo/prototype
+        }
+    }
+
+    private void scanClassFile(TargetDescriptor target, List<ScannedClass> out) {
+        Path classFile = Path.of(target.getPath());
+        if (!Files.exists(classFile) || !Files.isRegularFile(classFile)) return;
+        if (!classFile.getFileName().toString().endsWith(".class")) return;
+        if (isIgnoredClassFileName(classFile.getFileName().toString())) return;
+        if (shouldExcludeDollarClass(classFile.getFileName().toString())) return;
+        try {
+            String internalName = ClassFileInspector.readInternalClassName(classFile);
+            String fqcn = internalName.replace('/', '.');
+            if (fqcn.isEmpty()) return;
+            if (shouldExcludeDollarClass(fqcn)) return;
+            out.add(new ScannedClass(fqcn, classFile.toString(), target.getType()));
+        } catch (IOException ignored) {
             // ignore for demo/prototype
         }
     }
